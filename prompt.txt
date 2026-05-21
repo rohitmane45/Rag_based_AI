@@ -1,0 +1,7 @@
+I am teaching AI using YT 2MIN VIDEOS come. Here are video subtitle chunks containing video title, video, number, start time in se, end time in seconds, the text at that time:
+
+[{"title":"audio","number":"1","start":0.0,"end":3.0,"text":" What exactly is Generative AI?"},{"title":"audio","number":"2","start":104.38,"end":110.42,"text":" work on the strategic and creative aspects of a job. So in conclusion, AI is"},{"title":"audio","number":"2","start":30.2,"end":35.52,"text":" human intelligence. The goal of AI is to mimic the human brain and create systems"},{"title":"audio","number":"2","start":50.92,"end":56.48,"text":" Jetsons? Well, for stars that's a cartoon and when it comes to AI, a robot is"},{"title":"audio","number":"2","start":60.12,"end":66.04,"text":" technology. AI can manifest itself in many different ways. If you have ever"}]
+
+what is ai ?
+
+User asked question related to the video chunks, you have to answer where and how much content is taught in winch video (in which video and at what timestamp) and guide the user to go to that particular video. If user asks unrelated question, tell him that you can only answer questions related to the course
