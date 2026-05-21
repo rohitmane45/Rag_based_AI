@@ -1,175 +1,132 @@
-# Rag Based AI
+# 🚀 Rag Based AI
 
-This project is a simple question-answering system for course videos.
-It helps you ask questions about the video content and find the part of the course where the topic is taught.
+> Ask questions about course videos and get the most relevant answer, chunk, and timestamp.
 
-The project uses three main ideas:
+## ✨ What this project does
 
-1. Convert video to audio
-2. Transcribe audio into text chunks
-3. Search the chunks with embeddings and return the most relevant answer
+This project turns long course videos into something searchable.
+Instead of rewatching everything, you can ask questions like:
 
-## What this project does
+- 📌 What is this course about?
+- 🎯 Where is this topic explained?
+- ⏱️ Which video covers this idea?
 
-The goal of this project is to make long course videos easier to search.
-Instead of watching the whole video again, you can ask a question like:
+The system finds the most relevant transcript chunks and uses a local Ollama model to generate an answer.
 
-- What is this course about?
-- Where is this topic explained?
-- Which video covers this idea?
+## 🧠 How it works
 
-The system finds the most relevant subtitle chunks and then uses a local Ollama model to generate a response.
+1. 🎥 Video is converted to audio
+2. 🎙️ Audio is transcribed into text chunks
+3. 🔎 Chunks are converted into embeddings
+4. 💬 Your question is matched with the closest chunks
+5. 🤖 Ollama creates the final response
 
-## How it works
+## 🛠️ Main scripts
 
-### 1. Video to audio
+- `video_file_to_mp3.py` - converts videos in `video/` into MP3 files in `audio/`
+- `mp3_to_json.py` - transcribes audio with Whisper and saves chunk data
+- `read_chunks.py` - creates embeddings for each chunk and stores them in `embeddings.joblib`
+- `process_chuunks.py` - asks a question, finds the best chunks, and generates the answer
 
-The script `video_file_to_mp3.py` converts videos inside the `video/` folder into MP3 files inside the `audio/` folder.
+## 📁 Project structure
 
-### 2. Audio to text chunks
-
-The script `mp3_to_json.py` uses Whisper to transcribe the audio.
-It saves the result as chunk data in the `json/` folder and also creates `output.json`.
-
-### 3. Create embeddings
-
-The script `read_chunks.py` reads the JSON chunk files, sends each chunk to Ollama embedding API, and stores the vectors in `embeddings.joblib`.
-
-### 4. Ask a question
-
-The script `process_chuunks.py`:
-
-- asks the user for a query
-- creates an embedding for the query
-- compares it with stored chunk embeddings
-- picks the best matching chunks
-- sends the selected chunks to Ollama for the final answer
-
-## Project files
-
-### Main scripts
-
-- `video_file_to_mp3.py` - converts video files to audio
-- `mp3_to_json.py` - transcribes audio and creates chunk JSON
-- `read_chunks.py` - creates embeddings for the chunks
-- `process_chuunks.py` - answers user questions using similarity search
-
-### Data folders
-
-- `video/` - source video files
-- `audio/` - extracted MP3 files
-- `json/` - transcript chunks in JSON format
-- `embeddings.joblib` - saved chunk embeddings and metadata
-
-### Other files
-
+- `video/` - input video files
+- `audio/` - extracted audio files
+- `json/` - transcript chunk files
+- `embeddings.joblib` - saved embeddings and metadata
 - `prompt.txt` - prompt sent to the local model
-- `response.txt` - saved final model response
-- `whisper/` - local Whisper package source used by the project
+- `response.txt` - final answer saved from the model
+- `whisper/` - local Whisper source used by the project
 
-## Requirements
+## ✅ What is already done
 
-You need these tools installed on your machine:
+- Video files are converted into audio
+- Audio is split into transcript chunks
+- Chunks are saved in JSON format
+- Embeddings are generated for every chunk
+- User questions are matched with the most relevant chunks
+- A local model generates the final answer
+
+## 📦 Requirements
+
+You need:
 
 - Python
 - FFmpeg
 - Ollama
 
-You also need Python packages such as:
+Python packages used by the project:
 
-- requests
-- pandas
-- numpy
-- scikit-learn
-- joblib
-- whisper
-- typer
+- `requests`
+- `pandas`
+- `numpy`
+- `scikit-learn`
+- `joblib`
+- `whisper`
+- `typer`
 
-## Setup
+## ⚙️ Setup
 
 1. Create and activate a virtual environment.
 2. Install the required Python packages.
 3. Make sure FFmpeg is available in your system path.
-4. Start Ollama locally with the embedding and chat models you want to use.
-
-Example:
+4. Start Ollama locally.
 
 ```bash
 ollama serve
 ```
 
-## How to use
+## ▶️ How to use
 
-### Step 1: Put videos in the video folder
+### 1) Put videos in the `video/` folder
 
 Add your course videos to the `video/` folder.
 
-### Step 2: Convert video to audio
-
-Run the video conversion script:
+### 2) Convert video to audio
 
 ```bash
 python video_file_to_mp3.py
 ```
 
-### Step 3: Transcribe audio
-
-Run the transcription script:
+### 3) Transcribe audio
 
 ```bash
 python mp3_to_json.py
 ```
 
-### Step 4: Create embeddings
-
-Run the embedding script:
+### 4) Create embeddings
 
 ```bash
 python read_chunks.py
 ```
 
-### Step 5: Ask a question
-
-Run the question-answering script:
+### 5) Ask a question
 
 ```bash
 python process_chuunks.py
 ```
 
-Then type your question when the script asks:
+Then enter your query when prompted:
 
 ```text
 Ask your query:
 ```
 
-## Important notes
+## ⚠️ Important notes
 
-- The project expects Ollama to run on `http://localhost:11434`.
-- The embedding model used in the code is `bge-m3`.
-- The answer generation model used in the code is `llama3.2`.
-- Some generated files should not be committed to git, such as `embeddings.joblib`, `output.json`, `response.txt`, `audio/`, `video/`, and `json/`.
+- Ollama is expected to run on `http://localhost:11434`
+- The embedding model used in the code is `bge-m3`
+- The answer generation model used in the code is `llama3.2`
+- Generated files such as `embeddings.joblib`, `output.json`, `response.txt`, `audio/`, `video/`, and `json/` should not be committed
 
-## Current status of the project
+## 🌱 Future improvements
 
-These are the main things already done in this project:
+- Better chunk cleaning
+- Better prompt formatting
+- A proper web interface
+- Source links and timestamps in the answer
+- A one-command pipeline for the full workflow
 
-- video files are converted into audio
-- audio is transcribed into subtitle chunks
-- chunks are saved into JSON form
-- embeddings are created for every chunk
-- user questions are matched with the most relevant chunks
-- a local model generates the final answer
-
-## Future improvements
-
-You can improve this project by adding:
-
-- better chunk cleaning
-- a proper web interface
-- better prompt formatting
-- source links and timestamps in the answer
-- a single command pipeline for all steps
-
-## License
+## 📄 License
 
 This repository includes a `LICENSE` file. Check it for usage terms.
